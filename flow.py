@@ -4,10 +4,9 @@ import task
 
 def run(_id, info):
     with Flow(_id) as flow:
-        info_ = Parameter("info")
-        items = task.extract(info_["extract"])
-        task.load(info_["load"], items)
-    result = flow.run(parameters=dict(info=info))
+        items = task.extract(info["extract"])
+        task.load(info["load"], items)
+    result = flow.run()
     status = result.is_successful() and "succ" or "fail"
     return status, result.message
 
@@ -33,7 +32,7 @@ if __name__ == "__main__":
                      "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
                      "mntnfile", "mntnnm"
             ],
-            "file": "/home/sanxoo/ivi/file/20211125000001_ID.csv"
+            "file": "/home/sanxoo/ivi/file/20211125000002_ID.csv"
         },
     }
     status, message = run("ID", info)

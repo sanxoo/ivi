@@ -27,17 +27,18 @@ def select(_id=None):
     with connect() as conn:
         cursor = conn.cursor()
         keys = ["_id", "name", "info", "schedule", "last_run"]
-        query = f"select {', '.join(keys)} from jobs "
-        if _id: query += f"where _id = '{_id}' "
+        where = _id and f"where _id = '{_id}' " or ""
+        query = f"select {', '.join(keys)} from jobs {where} "
         cursor.execute(query)
         return [dict(zip(keys, row)) for row in cursor]
 
 def update(_id, **kwargs):
     with connect() as conn:
         cursor = conn.cursor()
-        query = f"update jobs set "
-        for k, val in kwargs.items(): query += f"{k} = '{val}' "
-        query += "where _id = '{_id}' "
+        equel = ", ".join([f"{k} = '{v}'" for k, v in kwargs.items()])
+        query = (
+            f"update jobs set {equel} where _id = '{_id}' "
+        )
         cursor.execute(query)
         conn.commit()
 

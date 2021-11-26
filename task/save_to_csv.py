@@ -9,6 +9,13 @@ def save(info, items):
             writer.writerow(row)
         
 if __name__ == "__main__":
+    info = {
+        "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
+                 "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
+                 "mntnfile", "mntnnm"
+        ],
+        "file": "/home/sanxoo/extrad/file/20211125000000_ID.csv"
+    }
     items = [
         {'baekduId': 'BAEK_31', 'baekdudistance': '6.1㎞', 'baekdugbn': 'tbmt', 'baekdugbnname': '태백산권',
          'baekdurealdistance': '11.3㎞', 'baekdusectione': '도래기재', 'baekdusections': '박달령', 'baekduspect': '구룡산',
@@ -31,13 +38,5 @@ if __name__ == "__main__":
          'mntnfile': ' http://www.forest.go.kr/images/data/down/mount/2214211300.zip', 'mntnnm': '태백산'
         },
     ]
-    info = {
-        "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
-                 "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
-                 "mntnfile", "mntnnm"
-        ],
-        "file": "/home/sanxoo/extrad/file/20211125000000_ID.csv"
-    }
     save(info, items)
-
 
