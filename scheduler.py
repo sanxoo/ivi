@@ -10,12 +10,10 @@ import jobs
 import flow
 
 def is_time_to_run(job, tick):
-    sch = []
-    for s in job["schedule"].strip().split():
-        if s != '*': sch.append([int(n) for n in s.split(",")])
-    now = list(reversed(time.localtime(tick)[1:5]))
-    for i, ns in enumerate(sch):
-        if now[i] not in ns: return False
+    sch = [s != "*" and [int(n) for n in s.split(",")] or s for s in job["schedule"].strip().split()]
+    now = time.localtime(tick)
+    for s, n in zip(sch, [now.tm_min, now.tm_hour, now.tm_mday, now.tm_mon, now.tm_wday]):
+        if s != "*" and n not in s: return False
     return True
 
 def run(job, tick):

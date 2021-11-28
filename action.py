@@ -46,6 +46,7 @@ if __name__ == "__main__":
     for job in lst():
         print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
 
+    t_id = str(uuid.uuid4())
     info = {
         "extract": {
             "url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
@@ -72,18 +73,17 @@ if __name__ == "__main__":
             "file": ""
         },
     }
-    t_id = str(uuid.uuid4())
     data = {
         "_id": t_id,
         "name": "forest trail info",
         "info": json.dumps(info),
-        "schedule": "0 0 * *",
+        "schedule": "0 0 * * *",
     }
     job = create(data)
     print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
     print(f"{job['info']}")
 
-    job = update(t_id, {"schedule": "1 1 * *", "last_run": "20211126190000"})
+    job = update(t_id, {"schedule": "1 1 * * *", "last_run": "20211128183000"})
     print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
     print(f"{job['info']}")
 
