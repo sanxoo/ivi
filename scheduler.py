@@ -12,7 +12,7 @@ import flow
 def is_time_to_run(job, tick):
     sch = [s != "*" and [int(n) for n in s.split(",")] or s for s in job["schedule"].strip().split()]
     now = time.localtime(tick)
-    for s, n in zip(sch, [now.tm_min, now.tm_hour, now.tm_mday, now.tm_mon, now.tm_wday]):
+    for s, n in zip(sch, [now.tm_min, now.tm_hour, now.tm_mday, now.tm_mon, (now.tm_wday + 1) % 7]):
         if s != "*" and n not in s: return False
     return True
 
