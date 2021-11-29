@@ -21,6 +21,9 @@ def update(_id, data):
 def delete(_id):
     jobs.delete(_id)
 
+def log(_id):
+    return jobs.logs.select(_id=_id)
+
 if __name__ == "__main__":
     import uuid
     import json

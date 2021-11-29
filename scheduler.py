@@ -29,6 +29,7 @@ def run(job, tick):
         status, message = flow.run(_id, info)
         logging.info(f"end {_id} {now} {status} {message}")
         jobs.update(_id, last_run=now)
+        jobs.logs.insert(_id=_id, run=now, end=time.strftime("%Y%m%d%H%M%S"), status=status, message=message)
     except Exception as e:
         logging.error(e)
 
