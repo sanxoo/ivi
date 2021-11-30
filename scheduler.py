@@ -4,9 +4,11 @@ import logging
 import time
 import json
 from multiprocessing import Process
+from datetime import datetime
 
 import config
 import jobs
+import sida 
 import flow
 
 def is_time_to_run(job, tick):
@@ -18,13 +20,9 @@ def is_time_to_run(job, tick):
 
 def run(job, tick):
     try:
-        _id, info = job["_id"], json.loads(job["info"])
+        info, _id = json.loads(job["info"]), job["_id"]
+        info = sida.update(info, _id, tick)
         now = time.strftime("%Y%m%d%H%M%S", time.localtime(tick))
-        # 
-        # fill information
-        # 
-        info["load"]["file"] = os.path.join(config.file_path, f"{_id}_{now}.csv")
-        # 
         logging.info(f"run {_id} {now}")
         status, message = flow.run(_id, info)
         logging.info(f"end {_id} {now} {status} {message}")

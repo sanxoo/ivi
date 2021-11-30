@@ -1,7 +1,12 @@
+from datetime import datetime
+
+import sida
 import task
 import jobs
 
 def test(info):
+    tick = datetime.today().timestamp()
+    info = sida.inject_dating_params(info, tick)
     return task.extract.run(info)
 
 def lst():
@@ -25,62 +30,21 @@ def log(_id):
     return jobs.logs.select(_id=_id)
 
 if __name__ == "__main__":
-    import uuid
     import json
-    """
-    info = {
-        "url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
-        "params": {
-            "ServiceKey": "NMXz8csGsBU0z3xf7Ut54KCV2anBkNSiWDLqnkb+L6apfHxoAoXYbz0jPNT/f9VX3R0ziEw/V2xhrosuOi2srw==",
-        },
-        "paging": {
-            "param": "pageNo",
-            "start_value": 1,
-            "count_param": "numOfRows",
-            "count_value": 5,
-            "total_count_path": "body/totalCount",
-        },
-        "format": "xml",
-        "item_path": "body/items/item",
-    }
-    for item in test(info): print(item)
-    """
+    import uuid
+    info, _id, tick = json.load(open("info.json")), str(uuid.uuid4()), datetime.today().timestamp()
 
+    for item in test(info["extract"]): print(item)
+
+    """
     for job in lst():
         print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
 
-    t_id = str(uuid.uuid4())
-    info = {
-        "extract": {
-            "url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
-            "params": {
-                "ServiceKey": "NMXz8csGsBU0z3xf7Ut54KCV2anBkNSiWDLqnkb+L6apfHxoAoXYbz0jPNT/f9VX3R0ziEw/V2xhrosuOi2srw==",
-            },
-            "dating": {
-            },
-            "paging": {
-                "param": "pageNo",
-                "start_value": 1,
-                "count_param": "numOfRows",
-                "count_value": 5,
-                "total_count_path": "body/totalCount",
-            },
-            "format": "xml",
-            "item_path": "body/items/item",
-        },
-        "load": {
-            "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
-                     "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
-                     "mntnfile", "mntnnm"
-            ],
-            "file": ""
-        },
-    }
     data = {
         "_id": t_id,
-        "name": "forest trail info",
+        "name": "corona occurrence status",
         "info": json.dumps(info),
-        "schedule": "0 0 * * *",
+        "schedule": "0 1 * * *",
     }
     job = create(data)
     print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
@@ -94,4 +58,5 @@ if __name__ == "__main__":
 
     for job in lst():
         print(f"{job['_id']} {job['name']} {job['schedule']} {job['last_run']}")
+    """
 
