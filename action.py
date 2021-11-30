@@ -1,13 +1,14 @@
 from datetime import datetime
 
+import config
+import jobs
 import sida
 import task
-import jobs
 
 def test(info):
     tick = datetime.today().timestamp()
     info = sida.inject_dating_params(info, tick)
-    return task.extract.run(info)
+    return task.fetch.run(info)
 
 def lst():
     return jobs.select()
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     import uuid
     info, _id, tick = json.load(open("info.json")), str(uuid.uuid4()), datetime.today().timestamp()
 
-    for item in test(info["extract"]): print(item)
+    for item in test(info["fetch"]): print(item)
 
     """
     for job in lst():

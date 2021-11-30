@@ -1,5 +1,5 @@
 {
-    "extract": {
+    "fetch": {
         "url": "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson",
         "params": {
             "ServiceKey": "y1Saw72GJ2oBIhVhX70hyS1W4cnB0lP5AaBofxtBaXp9/MH8ROdA5FesPUJkAGhHkm56MntTM+kQs1Aw2zw7eQ=="
@@ -21,7 +21,7 @@
         "format": "xml",
         "item_path": "body/items/item"
     },
-    "load": {
+    "store": {
         "keys": ["seq", "gubun", "gubunEn", "gubunCn", "defCnt",
                  "isolClearCnt", "isolClearCnt", "isolIngCnt", "deathCnt", "qurRate",
                  "incDec", "localOccCnt", "overFlowCnt", "stdDay", "createDt",

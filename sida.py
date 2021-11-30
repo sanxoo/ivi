@@ -34,13 +34,13 @@ def update_file(info, _id, tick):
     return info
 
 def update(info, _id, tick):
-    info["extract"] = inject_dating_params(info["extract"], tick)
-    info["load"] = update_file(info["load"], _id, tick)
+    info["fetch"] = inject_dating_params(info["fetch"], tick)
+    info["store"] = update_file(info["store"], _id, tick)
     return info
 
 if __name__ == "__main__":
     import json
-    info, _id, tick = json.load(open("info.json")), "ID", datetime.today().timestamp()
+    info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
 
     # print(get_dating_value(tick, "-5 M", "%Y%m%d%H%M%S"))
     # print(get_dating_value(tick, "-6 H", "%Y%m%d%H%M%S"))

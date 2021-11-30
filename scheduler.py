@@ -2,9 +2,8 @@ import os
 import logging.handlers
 import logging
 import time
-import json
 from multiprocessing import Process
-from datetime import datetime
+import json
 
 import config
 import jobs

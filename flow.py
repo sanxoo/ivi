@@ -1,18 +1,18 @@
-from prefect import Flow, Parameter
+from prefect import Flow
 
 import task
 
 def run(_id, info):
     with Flow(_id) as flow:
-        items = task.extract(info["extract"])
-        task.load(info["load"], items)
+        items = task.fetch(info["fetch"])
+        task.store(info["store"], items)
     result = flow.run()
     status = result.is_successful() and "succ" or "fail"
     return status, result.message
 
 if __name__ == "__main__":
     info = {
-        "extract": {
+        "fetch": {
             "url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
             "params": {
                 "ServiceKey": "NMXz8csGsBU0z3xf7Ut54KCV2anBkNSiWDLqnkb+L6apfHxoAoXYbz0jPNT/f9VX3R0ziEw/V2xhrosuOi2srw==",
@@ -27,14 +27,14 @@ if __name__ == "__main__":
             "format": "xml",
             "item_path": "body/items/item",
         },
-        "load": {
+        "store": {
             "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
                      "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
                      "mntnfile", "mntnnm"
             ],
-            "file": "/home/sanxoo/ivi/file/20211125000002_ID.csv"
+            "file": "/home/sanxoo/ivi/file/flow.csv"
         },
     }
-    status, message = run("ID", info)
+    status, message = run("_id", info)
     print(status, message)
 
