@@ -20,11 +20,33 @@ def test_fetch_and_store():
             "item_path": "body/items/item",
         },
         "store": {
-            "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
-                     "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
-                     "mntnfile", "mntnnm"
+            "keys": [
+                "baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
+                "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
+                "mntnfile", "mntnnm",
             ],
-            "file": "/home/sanxoo/ivi/file/task.csv"
+            "file": "/home/sanxoo/ivi/file/task.csv",
+        },
+    }
+    info = {
+        "fetch": {
+            "url": "http://lofin.mois.go.kr/HUB/FIRVBG",
+            "params": {
+                "Key": "XMQAH1000159020191205012012DLSBI",
+                "Type": "json",
+                "accnut_year": "2020",
+            },
+            "paging": {
+            },
+            "format": "json",
+            "item_path": "FIRVBG/1/row/*",
+        },
+        "store": {
+            "keys": [
+                "accnut_year", "armok_code", "armok_code_nm_korean", "prvyydo_last_budget_smam", "prvyydo_lastbudget_puresmam",
+                "sfrnd_code", "sfrnd_nm_korean", "wdr_sfrnd_code", "wdr_sfrnd_nm",
+            ],
+            "file": "/home/sanxoo/ivi/file/task.csv",
         },
     }
     items = task.fetch.run(info["fetch"])

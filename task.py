@@ -6,10 +6,13 @@ import csv
 from prefect import task
 
 def parse_json_items(text, path):
-	return []
+    return parse_json_value(text, path.rsplit("/", 1)[0])
 
 def parse_json_value(text, path):
-	return ""
+    keys = [i.isdigit() and int(i) or i for i in path.split("/")]
+    data = json.loads(text)
+    for k in keys: data = data[k]
+    return data
 
 def parse_xml_items(text, path):
     items = []
