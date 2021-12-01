@@ -87,5 +87,5 @@ if __name__ == "__main__":
     	},
 	}
     items = fetch.run(info["fetch"])
-	store.run(info["store"], items)
+    store.run(info["store"], items)
 
