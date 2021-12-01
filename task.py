@@ -60,32 +60,4 @@ def store(info, items):
         for item in items:
             row = [item[key] for key in info["keys"]]
             writer.writerow(row)
-        
-if __name__ == "__main__":
-    info = {
-		"fetch": {
-        	"url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
-        	"params": {
-            	"ServiceKey": "NMXz8csGsBU0z3xf7Ut54KCV2anBkNSiWDLqnkb+L6apfHxoAoXYbz0jPNT/f9VX3R0ziEw/V2xhrosuOi2srw==",
-        	},
-        	"paging": {
-            	"param": "pageNo",
-            	"start_value": 1,
-            	"count_param": "numOfRows",
-            	"count_value": 5,
-            	"total_count_path": "body/totalCount",
-        	},
-        	"format": "xml",
-        	"item_path": "body/items/item",
-    	},
-		"store": {
-        	"keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
-            	     "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
-                	 "mntnfile", "mntnnm"
-        	],
-        	"file": "/home/sanxoo/ivi/file/task.csv"
-    	},
-	}
-    items = fetch.run(info["fetch"])
-    store.run(info["store"], items)
 

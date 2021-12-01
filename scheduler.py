@@ -30,7 +30,7 @@ def run(job, tick):
     except Exception as e:
         logging.error(e)
 
-def main():
+def loop():
     interval = 60
     tick = time.time() // interval * interval + interval
     while 1:
@@ -51,6 +51,6 @@ if __name__ == "__main__":
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
     logging.info("scheduler start")
-    main()
+    loop()
     logging.info("scheduler stop.")
 

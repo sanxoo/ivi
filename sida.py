@@ -38,15 +38,3 @@ def update(info, _id, tick):
     info["store"] = update_file(info["store"], _id, tick)
     return info
 
-if __name__ == "__main__":
-    import json
-    info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
-
-    # print(get_dating_value(tick, "-5 M", "%Y%m%d%H%M%S"))
-    # print(get_dating_value(tick, "-6 H", "%Y%m%d%H%M%S"))
-    # print(get_dating_value(tick, "-1 d", "%Y%m%d%H%M%S"))
-    # print(get_dating_value(tick, "-1 m", "%Y%m%d%H%M%S"))
-    # print(get_dating_value(tick, "-1 Y", "%Y%m%d%H%M%S"))
-    
-    print(update(info, _id, tick))
-
