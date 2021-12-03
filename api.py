@@ -7,7 +7,7 @@ from fastapi import FastAPI, Request
 
 import config
 import jobs
-import sida
+import flow
 import task
 
 api = FastAPI()
@@ -44,7 +44,7 @@ async def delete(_id: str):
 async def test(request: Request):
     data = await request.json()
     tick = datetime.today().timestamp()
-    info = sida.inject_dating_params(data, tick)
+    info = flow.uodate_fetch_info(data, tick)
     return task.fetch.run(info)
 
 if __name__ == "__main__":

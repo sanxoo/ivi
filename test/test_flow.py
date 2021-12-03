@@ -1,35 +1,23 @@
 import sys; sys.path.append("..")
 
+import json
+from datetime import datetime
+
 import flow
 
+def test_update():
+    info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
+	print(info["fetch"])
+    print(flow.update_fetch_info(info["fetch"], tick))
+	print(info["store"])
+    print(flow.update_store_info(info["store"], _id, tick))
+
 def test_run():
-    info = {
-        "fetch": {
-            "url": "http://openapi.forest.go.kr/openapi/service/trailInfoService/gettrailservice",
-            "params": {
-                "ServiceKey": "NMXz8csGsBU0z3xf7Ut54KCV2anBkNSiWDLqnkb+L6apfHxoAoXYbz0jPNT/f9VX3R0ziEw/V2xhrosuOi2srw==",
-            },
-            "paging": {
-                "param": "pageNo",
-                "start_value": 1,
-                "count_param": "numOfRows",
-                "count_value": 5,
-                "total_count_path": "body/totalCount",
-            },
-            "format": "xml",
-            "item_path": "body/items/item",
-        },
-        "store": {
-            "keys": ["baekduId", "baekdudistance", "baekdugbn", "baekdugbnname", "baekdurealdistance",
-                     "baekdusectione", "baekdusections", "baekduspect", "baekduvia", "mntloca",
-                     "mntnfile", "mntnnm"
-            ],
-            "file": "/home/sanxoo/ivi/file/flow.csv"
-        },
-    }
-    status, message = flow.run("_id", info)
+    info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
+    status, message = flow.run(info, _id, tick)
     print(status, message)
 
 if __name__ == "__main__":
+    test_update()
     test_run()
 

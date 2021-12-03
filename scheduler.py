@@ -7,26 +7,23 @@ import json
 
 import config
 import jobs
-import sida 
 import flow
 
 def is_time_to_run(job, tick):
     sch = [s != "*" and [int(n) for n in s.split(",")] or s for s in job["schedule"].strip().split()]
-    now = time.localtime(tick)
-    for s, n in zip(sch, [now.tm_min, now.tm_hour, now.tm_mday, now.tm_mon, (now.tm_wday + 1) % 7]):
+    ttm = time.localtime(tick)
+    for s, n in zip(sch, [ttm.tm_min, ttm.tm_hour, ttm.tm_mday, ttm.tm_mon, (ttm.tm_wday + 1) % 7]):
         if s != "*" and n not in s: return False
     return True
 
 def run(job, tick):
     try:
-        info, _id = json.loads(job["info"]), job["_id"]
-        info = sida.update(info, _id, tick)
-        now = time.strftime("%Y%m%d%H%M%S", time.localtime(tick))
-        logging.info(f"run {_id} {now}")
-        status, message = flow.run(_id, info)
-        logging.info(f"end {_id} {now} {status} {message}")
-        jobs.update(_id, last_run=now)
-        jobs.logs.insert(_id=_id, run=now, end=time.strftime("%Y%m%d%H%M%S"), status=status, message=message)
+        info, _id, run = json.loads(job["info"]), job["_id"], time.strftime("%Y%m%d%H%M%S", time.localtime(tick))
+        logging.info(f"run {_id} {run}")
+        status, message = flow.run(info, _id, tick)
+        logging.info(f"end {_id} {run} {status} {message}")
+        jobs.update(_id, last_run=run)
+        jobs.logs.insert(_id=_id, run=run, end=time.strftime("%Y%m%d%H%M%S"), status=status, message=message)
     except Exception as e:
         logging.error(e)
 
