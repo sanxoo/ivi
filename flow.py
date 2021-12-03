@@ -26,9 +26,8 @@ def get_dating_value(tick, delta, format):
 
 def update_fetch_info(fetch_info, tick):
     dating = fetch_info["dating"]
-    if dating:
-    	for i, d in [("param", "delta"), ("end_param", "end_delta")]:
-        	fetch_info["params"][dating[i]] = get_dating_value(tick, dating[d], dating["format"])
+   	for i, d in [("param", "delta"), ("end_param", "end_delta")]:
+		if dating.get(i): fetch_info["params"][dating[i]] = get_dating_value(tick, dating[d], dating["format"])
     return fetch_info
 
 def update_store_info(store_info, _id, tick):
