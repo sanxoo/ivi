@@ -12,6 +12,11 @@ def test_update():
 	print(info["store"])
     print(flow.update_store_info(info["store"], _id, tick))
 
+def test_fetch():
+    info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
+	for item in flow.run_fetch(info["fetch"], tick):
+		print(item)
+
 def test_run():
     info, _id, tick = json.load(open("info.json")), "_id", datetime.today().timestamp()
     status, message = flow.run(info, _id, tick)

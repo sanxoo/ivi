@@ -2,7 +2,7 @@ import os
 import logging.handlers
 import logging
 import time
-from multiprocessing import Process
+import multiprocessing
 import json
 
 import config
@@ -34,7 +34,7 @@ def loop():
         if tick < time.time():
             try:
                 for job in jobs.select():
-                    if is_time_to_run(job, tick): Process(target=run, args=(job, tick)).start()
+                    if is_time_to_run(job, tick): multiprocessing.Process(target=run, args=(job, tick)).start()
             except Exception as e:
                 logging.error(e)
             tick += interval

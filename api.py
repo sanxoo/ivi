@@ -1,14 +1,13 @@
 import os
 import logging.handlers
 import logging
-from datetime import datetime
+import datetime
 
 from fastapi import FastAPI, Request
 
 import config
 import jobs
 import flow
-import task
 
 api = FastAPI()
 
@@ -43,9 +42,8 @@ async def delete(_id: str):
 @api.post("/test", status_code=200)
 async def test(request: Request):
     data = await request.json()
-    tick = datetime.today().timestamp()
-    info = flow.uodate_fetch_info(data, tick)
-    return task.fetch.run(info)
+    tick = datetime.datetime.today().timestamp()
+    return flow.run_fetch(date, tick)
 
 if __name__ == "__main__":
     logfile = os.path.join(config.logs_path, "api.log")
